@@ -57,5 +57,4 @@ public class AnagramTest {
         String expected = "f&%edc&ba sir~byh av*aj";
         assertEquals(expected, anagram.createAnagram(source));
     }
-
 }

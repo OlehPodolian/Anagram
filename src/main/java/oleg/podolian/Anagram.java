@@ -18,10 +18,10 @@ public class Anagram {
 
     /**
      * Reverses the string input according to the following scenarios:
-     *  - when input is null or empty then simply returns empty string
-     *  - when input contains only spaces then no processing is needed and it is returned as it is
-     *  - when input is a valid single word (only letters) then it gets reversed by StringBuffer
-     *  - in other cases reversion algorithm is applied
+     * - when input is null or empty then simply returns empty string
+     * - when input contains only spaces then no processing is needed and it is returned as it is
+     * - when input is a valid single word (only letters) then it gets reversed by StringBuffer
+     * - in other cases reversion algorithm is applied
      *
      * @param input - raw input
      * @return result reversing processing
@@ -29,9 +29,9 @@ public class Anagram {
     public String createAnagram(String input) {
         if (input == null || input.isEmpty()) {
             return EMPTY;
-        } else  if (containsOnlySpaces(input)) {
+        } else if (containsOnlySpaces(input)) {
             return input;
-        } else if(isSingleWord(input)) {
+        } else if (isSingleWord(input)) {
             return new StringBuffer(input).reverse().toString();
         }
         return resolveManyWords(input);
@@ -61,33 +61,32 @@ public class Anagram {
 
     /**
      * Reverses single word as to following scenarios:
-     *  - when input is empty then empty is returned
-     *  - when input is a valid single word (only letters) then it gets reversed by StringBuffer
-     *  - in other cases reversion algorithm is applied
+     * - when input is empty then empty is returned
+     * - when input is a valid single word (only letters) then it gets reversed by StringBuffer
+     * - in other cases reversion algorithm is applied
      *
      * @param input - raw input
      * @return result reversing processing of single word
      */
-    private String reverseWord(String input){
+    private String reverseWord(String input) {
         if (input.equals(EMPTY)) {
             return EMPTY;
-        }
-        if(isSingleWord(input)) {
+        } else if (isSingleWord(input)) {
             return new StringBuffer(input).reverse().toString();
         }
         int index = 0;
-        char [] symbols = input.toCharArray();
+        char[] symbols = input.toCharArray();
         Map<Integer, Character> nonLetters = new TreeMap<>();
         LinkedList<String> letters = new LinkedList<>();
         for (char ch : symbols) {
-            if(Character.isAlphabetic(ch)){
+            if (Character.isAlphabetic(ch)) {
                 letters.offerFirst(String.valueOf(ch));
             } else {
                 nonLetters.put(index, ch);
             }
             index++;
         }
-        final StringBuffer container = new StringBuffer(String.join(EMPTY, letters.toArray(new String[] {})));
+        final StringBuffer container = new StringBuffer(String.join(EMPTY, letters.toArray(new String[]{})));
         nonLetters.forEach((key, value) -> container.insert(key.intValue(), value.charValue()));
         return container.toString();
     }
@@ -106,15 +105,15 @@ public class Anagram {
                 .stream(input.split(SPACE))
                 .forEach(elm -> elements.add(reverseWord(elm)));
         return String.join(SPACE, elements) + tail;
-
     }
+
     /**
-    * When many words are separated by spaces they're treated separately but trailing spaces will
-    * be trimmed by splitter
-    *
-    * @param input - raw (unprocessed) input
-    * @return String containing only spaces to add to the last word
-    */
+     * When many words are separated by spaces they're treated separately but trailing spaces will
+     * be trimmed by splitter
+     *
+     * @param input - raw (unprocessed) input
+     * @return String containing only spaces to add to the last word
+     */
     private String getTail(String input) {
         if (!input.endsWith(SPACE)) {
             return EMPTY;
@@ -122,7 +121,7 @@ public class Anagram {
         final StringBuilder tail = new StringBuilder();
         while (input.endsWith(SPACE)) {
             tail.append(SPACE);
-            input = input.substring(0, input.length() -1);
+            input = input.substring(0, input.length() - 1);
 
         }
         return tail.toString();
